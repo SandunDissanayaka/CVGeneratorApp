@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Microsoft.Data.SqlClient; // Added for SQL Server connection
 
 namespace CVGeneratorApp
 {
@@ -243,7 +244,7 @@ namespace CVGeneratorApp
             confirmPasswordTimer?.Start();
         }
 
-        // --- REGISTER BUTTON LOGIC ---
+        // --- REGISTER BUTTON LOGIC (DATABASE INSERTION) ---
 
         // Triggers when the Register button is clicked
         private void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -259,7 +260,31 @@ namespace CVGeneratorApp
                 if (!ValidatePassword()) return;
                 if (!ValidateConfirmPassword()) return;
 
-                // If all validations are successful, show a success message
+                // --- DATABASE LOGIC STARTS HERE ---
+
+                // 1. Get the connection from our DatabaseHelper class
+                using (SqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open(); // Open the door to the database
+
+                    // 2. Write the SQL Query to insert data into the 'Users' table
+                    string query = "INSERT INTO Users (Username, Email, Password) VALUES (@Username, @Email, @Password)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // 3. Securely pass the typed data into the SQL Query (Prevents SQL Injection)
+                        cmd.Parameters.AddWithValue("@Username", txtUsername.Text);
+                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                        cmd.Parameters.AddWithValue("@Password", txtPassword.Password);
+
+                        // 4. Run the query to save data to the database
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // --- DATABASE LOGIC ENDS HERE ---
+
+                // If all validations and database saving are successful, show a success message
                 MessageBox.Show("Registration Successful! Now you can Login.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Open the main login window
@@ -271,8 +296,8 @@ namespace CVGeneratorApp
             }
             catch (Exception ex)
             {
-                // Show error message if the application crashes
-                MessageBox.Show("Something went wrong: " + ex.Message, "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Show error message if the database connection or application crashes
+                MessageBox.Show("Database Error: " + ex.Message, "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

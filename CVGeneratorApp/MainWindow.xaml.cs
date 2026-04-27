@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using Microsoft.Data.SqlClient; // Required for SQL Server Connection
 
 namespace CVGeneratorApp
 {
@@ -34,18 +35,18 @@ namespace CVGeneratorApp
         {
             try
             {
-                // Clear any old errors first
+                // 1. Clear any old errors first
                 ResetErrors();
 
-                // 1. Check if the Username field is empty
+                // 2. Check if the Username field is empty
                 if (string.IsNullOrWhiteSpace(txtUsername.Text))
                 {
                     errUsername.Visibility = Visibility.Visible;
                     txtUsername.BorderBrush = redBorder;
-                    return; // Stop here
+                    return; // Stop here and wait for user input
                 }
 
-                // 2. Check if the Password field is empty
+                // 3. Check if the Password field is empty
                 if (string.IsNullOrWhiteSpace(txtPassword.Password))
                 {
                     errPassword.Visibility = Visibility.Visible;
@@ -53,21 +54,58 @@ namespace CVGeneratorApp
                     return; // Stop here
                 }
 
-                // If both fields are filled, show success (Database connection comes later)
-                MessageBox.Show("Login Successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                // --- DATABASE LOGIC STARTS HERE ---
+
+                // Connect to the database using our DatabaseHelper class
+                using (SqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open(); // Open the door to the database
+
+                    // SQL Query to check if the Username and Password match any record in the Users table
+                    // COUNT(1) checks how many matching rows exist (1 = success, 0 = wrong details)
+                    string query = "SELECT COUNT(1) FROM Users WHERE Username = @Username AND Password = @Password";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // Securely pass the parameters to prevent SQL Injection
+                        cmd.Parameters.AddWithValue("@Username", txtUsername.Text);
+                        cmd.Parameters.AddWithValue("@Password", txtPassword.Password);
+
+                        // ExecuteScalar returns the result of the COUNT query
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        if (count == 1)
+                        {
+                            // If count is 1, the user exists and the password is correct!
+                            MessageBox.Show("Login Successful! Welcome back.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            // TODO: Later, we will open the Main CV Dashboard window here.
+                            // DashboardWindow dash = new DashboardWindow();
+                            // dash.Show();
+                            // this.Close();
+                        }
+                        else
+                        {
+                            // If count is 0, the username or password is wrong
+                            MessageBox.Show("Invalid Username or Password. Please try again.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                }
+
+                // --- DATABASE LOGIC ENDS HERE ---
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Show system error if the app or database crashes
+                MessageBox.Show("Something went wrong: " + ex.Message, "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // --- LIVE UI UPDATE EVENTS (THE FIX) ---
+        // --- LIVE UI UPDATE EVENTS ---
 
-        // This triggers IMMEDIATELY when the user types in the Username box
+        // Triggers IMMEDIATELY when the user types in the Username box
         private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // If the user starts typing, hide the error and reset the border
             if (txtUsername != null)
             {
                 txtUsername.BorderBrush = defaultBorder;
@@ -75,23 +113,18 @@ namespace CVGeneratorApp
             }
         }
 
-        // This triggers IMMEDIATELY when the user types in the Password box
+        // Triggers IMMEDIATELY when the user types in the Password box
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            // If the user starts typing, hide the error and reset the border
             if (brdPassword != null)
             {
                 brdPassword.BorderBrush = defaultBorder;
                 errPassword.Visibility = Visibility.Collapsed;
             }
 
-            // Handle the "Password" placeholder text visibility
             if (PasswordPlaceholder != null)
             {
-                if (string.IsNullOrEmpty(txtPassword.Password))
-                    PasswordPlaceholder.Visibility = Visibility.Visible;
-                else
-                    PasswordPlaceholder.Visibility = Visibility.Hidden;
+                PasswordPlaceholder.Visibility = string.IsNullOrEmpty(txtPassword.Password) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
