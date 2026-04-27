@@ -20,5 +20,29 @@ namespace CVGeneratorApp
         {
             InitializeComponent();
         }
+
+        // App eka close karana code eka
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        // Window eka mouse eken drag karanna puluwan karana code eka
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        // Create account button eke code eka
+        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        {
+            // Register window eka haduwama meka pawichchi karamu
+            // RegisterWindow regWindow = new RegisterWindow();
+            // regWindow.Show();
+            // this.Close(); 
+        }
     }
 }
