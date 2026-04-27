@@ -1,0 +1,84 @@
+﻿<Window x:Class="CVGeneratorApp.DashboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="QuickCV - Dashboard" 
+        Height="720" Width="1280"
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI"
+        Background="#F4F6F9">
+
+    <Window.Resources>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#33333C"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#1E1E24">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="QuickCV" 
+                               Foreground="White" 
+                               FontSize="32" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,30,0,5"/>
+
+                    <TextBlock Text="Build Your Perfect CV in Minutes" 
+                               Foreground="#AAAAAA" 
+                               FontSize="11" 
+                               FontStyle="Italic"
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,0,35"/>
+
+                    <Button x:Name="btnHome" Content="🏠  Home" Style="{StaticResource MenuButton}" Click="btnHome_Click"/>
+                    <Button x:Name="btnEditDetails" Content="📝  Edit CV Details" Style="{StaticResource MenuButton}" Click="btnEditDetails_Click"/>
+                    <Button x:Name="btnTemplates" Content="🎨  Templates &amp; Preview" Style="{StaticResource MenuButton}" Click="btnTemplates_Click"/>
+                    <Button x:Name="btnSettings" Content="⚙️  Settings" Style="{StaticResource MenuButton}" Click="btnSettings_Click"/>
+                </StackPanel>
+
+                <Button x:Name="btnLogout" Grid.Row="1" Content="🚪  Logout" Style="{StaticResource MenuButton}" Margin="0,0,0,20" Click="btnLogout_Click"/>
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Column="1" Background="#F4F6F9">
+
+            <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
+
+        </Border>
+    </Grid>
+</Window>

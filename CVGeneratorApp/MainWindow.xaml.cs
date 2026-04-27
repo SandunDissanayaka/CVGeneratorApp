@@ -76,13 +76,10 @@ namespace CVGeneratorApp
 
                         if (count == 1)
                         {
-                            // If count is 1, the user exists and the password is correct!
-                            MessageBox.Show("Login Successful! Welcome back.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
                             // TODO: Later, we will open the Main CV Dashboard window here.
-                            // DashboardWindow dash = new DashboardWindow();
-                            // dash.Show();
-                            // this.Close();
+                            DashboardWindow dash = new DashboardWindow();
+                            dash.Show();
+                            this.Close();
                         }
                         else
                         {
