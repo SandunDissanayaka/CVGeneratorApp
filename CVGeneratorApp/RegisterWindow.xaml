@@ -7,24 +7,24 @@
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Height" Value="50"/>
-            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
             <Setter Property="Background" Value="#F4F5F8"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="25">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="25"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
                                 <Path Grid.Column="0" Width="18" Height="18" Stretch="Uniform" Fill="#1A1A1A" HorizontalAlignment="Center" VerticalAlignment="Center"
                                       Data="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
-
                                 <TextBlock x:Name="Placeholder" Grid.Column="1" Text="{TemplateBinding Tag}" Foreground="#888888" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Hidden"/>
                                 <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,20,0"/>
                             </Grid>
@@ -32,74 +32,6 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="Text" Value="">
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="EmailTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Margin" Value="0,0,0,15"/>
-            <Setter Property="Background" Value="#F4F5F8"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="25">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Path Grid.Column="0" Width="20" Height="16" Stretch="Uniform" Fill="#1A1A1A" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Data="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
-
-                                <TextBlock x:Name="Placeholder" Grid.Column="1" Text="{TemplateBinding Tag}" Foreground="#888888" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Hidden"/>
-                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Margin" Value="0,0,0,15"/>
-            <Setter Property="Background" Value="#F4F5F8"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="PasswordBox">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="25">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Path Grid.Column="0" Width="16" Height="20" Stretch="Uniform" Fill="#1A1A1A" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Data="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
-
-                                <TextBlock x:Name="Placeholder" Grid.Column="1" Text="{TemplateBinding Tag}" Foreground="#888888" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                <Setter TargetName="Placeholder" Property="Visibility" Value="Hidden"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -115,39 +47,109 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Background="#EFEFEF" CornerRadius="15,0,0,15" ClipToBounds="True">
-                <Image Source="images/Register.jpg" Stretch="UniformToFill" Margin="-32,68,4,68"/>
+            <Border Grid.Column="0" CornerRadius="15,0,0,15" ClipToBounds="True">
+                <Grid>
+                    <Image Source="images/Register.jpg" Stretch="UniformToFill" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border CornerRadius="15,0,0,15">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                <GradientStop Color="#CC1A1A1A" Offset="0"/>
+                                <GradientStop Color="#88007ACC" Offset="0.5"/>
+                                <GradientStop Color="#22000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="QuickCV" FontSize="36" FontWeight="Heavy" Foreground="#FFFFFF" HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="10" Color="#22000000" Direction="320" ShadowDepth="2"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="Build Your Perfect CV in Minutes." FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Center" Margin="0,5,0,0">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="8" Color="Black" Direction="320" ShadowDepth="1.5" Opacity="0.7"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
             </Border>
 
-            <StackPanel Grid.Column="1" Margin="40,20,40,20" VerticalAlignment="Center">
-                <TextBlock Text="Create Account" FontSize="26" FontWeight="Bold" Margin="0,0,0,25" HorizontalAlignment="Center" Foreground="#333333"/>
+            <StackPanel Grid.Column="1" Margin="35,15,35,15" VerticalAlignment="Center">
+                <TextBlock Text="Create Account" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center" Foreground="#333333"/>
 
-                <TextBox x:Name="txtEmail" Style="{StaticResource EmailTextBoxStyle}" Tag="Email Address"/>
-                <TextBox x:Name="txtUsername" Style="{StaticResource TextBoxStyle}" Tag="Username"/>
-                <PasswordBox x:Name="txtPassword" Style="{StaticResource PasswordBoxStyle}" Tag="Password"/>
+                <TextBox x:Name="txtEmail" Style="{StaticResource TextBoxStyle}" Tag="Email Address" TextChanged="txtEmail_TextChanged"/>
+                <TextBlock x:Name="errEmail" Text="⚠️ Please enter a valid email address." Foreground="#D32F2F" FontSize="12" Margin="15,0,0,10" Visibility="Collapsed"/>
 
-                <Button Content="Register" Style="{StaticResource PopUpSolidButton}"/>
+                <TextBox x:Name="txtUsername" Style="{StaticResource TextBoxStyle}" Tag="Username" TextChanged="txtUsername_TextChanged"/>
+                <TextBlock x:Name="errUsername" Text="⚠️ Username is required." Foreground="#D32F2F" FontSize="12" Margin="15,0,0,10" Visibility="Collapsed"/>
 
-                <TextBlock Text="Already have an account?" Margin="0,20,0,10" HorizontalAlignment="Center" Foreground="Gray"/>
+                <Grid Margin="0,0,0,5">
+                    <Border x:Name="brdPassword" Background="#F4F5F8" CornerRadius="25" Height="50" BorderThickness="1.5" BorderBrush="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <Path Grid.Column="0" Width="16" Height="20" Stretch="Uniform" Fill="#1A1A1A" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Data="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
+                            <Grid Grid.Column="1">
+                                <TextBlock x:Name="PassPlaceholder" Text="Password" FontSize="15" Foreground="#888888" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                <PasswordBox x:Name="txtPassword" Background="Transparent" BorderThickness="0" FontSize="15" VerticalContentAlignment="Center" PasswordChanged="txtPassword_PasswordChanged"/>
+                                <TextBox x:Name="txtVisiblePassword" Background="Transparent" BorderThickness="0" FontSize="15" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                            </Grid>
+                            <Button Grid.Column="2" Cursor="Hand" Focusable="False" PreviewMouseLeftButtonDown="Eye_Down" PreviewMouseLeftButtonUp="Eye_Up">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <Path x:Name="EyeIcon1" Width="20" Height="20" Stretch="Uniform" Fill="#888888" Data="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <TextBlock x:Name="errPassword" Text="⚠️ Password must be at least 6 characters." Foreground="#D32F2F" FontSize="12" Margin="15,0,0,10" Visibility="Collapsed"/>
 
+                <Grid Margin="0,0,0,5">
+                    <Border x:Name="brdConfirmPassword" Background="#F4F5F8" CornerRadius="25" Height="50" BorderThickness="1.5" BorderBrush="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <Path Grid.Column="0" Width="16" Height="20" Stretch="Uniform" Fill="#1A1A1A" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Data="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
+                            <Grid Grid.Column="1">
+                                <TextBlock x:Name="ConfirmPlaceholder" Text="Confirm Password" FontSize="15" Foreground="#888888" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                <PasswordBox x:Name="txtConfirmPassword" Background="Transparent" BorderThickness="0" FontSize="15" VerticalContentAlignment="Center" PasswordChanged="txtConfirmPassword_PasswordChanged"/>
+                                <TextBox x:Name="txtVisibleConfirmPassword" Background="Transparent" BorderThickness="0" FontSize="15" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                            </Grid>
+                            <Button Grid.Column="2" Cursor="Hand" Focusable="False" PreviewMouseLeftButtonDown="ConfirmEye_Down" PreviewMouseLeftButtonUp="ConfirmEye_Up">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <Path x:Name="EyeIcon2" Width="20" Height="20" Stretch="Uniform" Fill="#888888" Data="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <TextBlock x:Name="errConfirmPassword" Text="⚠️ Passwords do not match." Foreground="#D32F2F" FontSize="12" Margin="15,0,0,15" Visibility="Collapsed"/>
+
+                <Button Content="Register" x:Name="btnRegister" Style="{StaticResource PopUpSolidButton}" Click="btnRegister_Click"/>
+                <TextBlock Text="Already have an account?" Margin="0,15,0,8" HorizontalAlignment="Center" Foreground="Gray"/>
                 <Button Content="Back to Login" Style="{StaticResource PopUpOutlineButton}" Click="BackToLogin_Click"/>
             </StackPanel>
 
             <Border Grid.ColumnSpan="2" Height="40" VerticalAlignment="Top" Background="Transparent" MouseLeftButtonDown="Window_MouseDown"/>
-
-            <Button Grid.Column="1" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Width="30" Height="30" Margin="15" Background="Transparent" BorderThickness="0" 
-                    FontSize="18" FontWeight="Bold" Foreground="#999999" Cursor="Hand" Click="CloseButton_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Grid.Column="1" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Height="30" Margin="15" Background="Transparent" BorderThickness="0" FontSize="18" FontWeight="Bold" Foreground="#AAAAAA" Cursor="Hand" Click="CloseButton_Click"/>
         </Grid>
     </Border>
 </Window>
