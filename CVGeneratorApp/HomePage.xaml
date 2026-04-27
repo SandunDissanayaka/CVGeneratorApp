@@ -38,24 +38,24 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border Background="{TemplateBinding Background}" 
-                        BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="1" CornerRadius="20">
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" CornerRadius="20">
                             <Grid>
                                 <ScrollViewer x:Name="PART_ContentHost" Margin="35,0,10,0"/>
 
                                 <TextBlock x:Name="placeholder" 
-                                   Text="Search your saved CVs..." 
-                                   Foreground="#AAAAAA" 
-                                   FontStyle="Italic"
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" 
-                                   Margin="35,0,0,0" 
-                                   IsHitTestVisible="False"
-                                   Visibility="Collapsed"/>
+                                           Text="Search your saved CVs..." 
+                                           Foreground="#AAAAAA" 
+                                           FontStyle="Italic"
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left" 
+                                           Margin="35,0,0,0" 
+                                           IsHitTestVisible="False"
+                                           Visibility="Collapsed"/>
 
                                 <TextBlock Text="&#xE71E;" FontFamily="Segoe MDL2 Assets" 
-                                   Foreground="#888888" VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" Margin="12,0,0,0"/>
+                                           Foreground="#888888" VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left" Margin="12,0,0,0"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -122,7 +122,11 @@
                 <TextBlock Text="Ready to build another professional CV?" Foreground="#888888" FontSize="14" Margin="0,5,0,0"/>
             </StackPanel>
 
-            <Button Style="{StaticResource CreateButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button x:Name="btnCreateNew" 
+                    Style="{StaticResource CreateButtonStyle}" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Click="btnCreateNew_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="+ " FontSize="18" Margin="0,0,5,0"/>
                     <TextBlock Text="Create New CV" VerticalAlignment="Center"/>
@@ -131,7 +135,7 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="0,0,0,25">
-            <TextBox Style="{StaticResource SearchBoxStyle}" Width="350" HorizontalAlignment="Left" Tag="Search your CVs..."/>
+            <TextBox Style="{StaticResource SearchBoxStyle}" Width="350" HorizontalAlignment="Left"/>
         </Grid>
 
         <TextBlock Grid.Row="2" Text="My Saved CVs" FontSize="20" FontWeight="SemiBold" Foreground="#444444" Margin="0,0,0,15"/>

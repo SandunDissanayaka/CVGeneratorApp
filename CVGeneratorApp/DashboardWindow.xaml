@@ -20,7 +20,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="4,0,0,0">
                             <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                         </Border>
                     </ControlTemplate>
@@ -33,6 +33,20 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="ActiveMenuButton" TargetType="Button" BasedOn="{StaticResource MenuButton}">
+            <Setter Property="Background" Value="#33333C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#007ACC" BorderThickness="4,0,0,0">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -42,7 +56,6 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" Background="#1E1E24">
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -50,21 +63,9 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="QuickCV" 
-                               Foreground="White" 
-                               FontSize="32" 
-                               FontWeight="Bold" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,30,0,5"/>
+                    <TextBlock Text="QuickCV" Foreground="White" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,30,0,35"/>
 
-                    <TextBlock Text="Build Your Perfect CV in Minutes" 
-                               Foreground="#AAAAAA" 
-                               FontSize="11" 
-                               FontStyle="Italic"
-                               HorizontalAlignment="Center" 
-                               Margin="0,0,0,35"/>
-
-                    <Button x:Name="btnHome" Content="🏠  Home" Style="{StaticResource MenuButton}" Click="btnHome_Click"/>
+                    <Button x:Name="btnHome" Content="🏠  Home" Style="{StaticResource ActiveMenuButton}" Click="btnHome_Click"/>
                     <Button x:Name="btnEditDetails" Content="📝  Edit CV Details" Style="{StaticResource MenuButton}" Click="btnEditDetails_Click"/>
                     <Button x:Name="btnTemplates" Content="🎨  Templates &amp; Preview" Style="{StaticResource MenuButton}" Click="btnTemplates_Click"/>
                     <Button x:Name="btnSettings" Content="⚙️  Settings" Style="{StaticResource MenuButton}" Click="btnSettings_Click"/>
@@ -72,13 +73,10 @@
 
                 <Button x:Name="btnLogout" Grid.Row="1" Content="🚪  Logout" Style="{StaticResource MenuButton}" Margin="0,0,0,20" Click="btnLogout_Click"/>
             </Grid>
-
         </Border>
 
         <Border Grid.Column="1" Background="#F4F6F9">
-
             <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
-
         </Border>
     </Grid>
 </Window>

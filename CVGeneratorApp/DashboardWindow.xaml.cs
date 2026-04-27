@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace CVGeneratorApp
 {
@@ -8,43 +9,55 @@ namespace CVGeneratorApp
         public DashboardWindow()
         {
             InitializeComponent();
-
-            // Load the Home Page automatically when the Dashboard opens
+            // Start the app by showing the Home Page
             MainContentFrame.Navigate(new HomePage());
+        }
+
+        // Helper method to change the button styles when clicked
+        private void UpdateSidebarSelection(Button activeBtn)
+        {
+            // Reset all buttons to the normal style
+            btnHome.Style = (Style)FindResource("MenuButton");
+            btnEditDetails.Style = (Style)FindResource("MenuButton");
+            btnTemplates.Style = (Style)FindResource("MenuButton");
+            btnSettings.Style = (Style)FindResource("MenuButton");
+
+            // Set the clicked button to the Active style
+            activeBtn.Style = (Style)FindResource("ActiveMenuButton");
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            // Load the Home Page when the Home button is clicked
+            UpdateSidebarSelection(btnHome);
             MainContentFrame.Navigate(new HomePage());
         }
 
         private void btnEditDetails_Click(object sender, RoutedEventArgs e)
         {
-            // We will load the Edit Details page here later
+            UpdateSidebarSelection(btnEditDetails);
+            MainContentFrame.Navigate(new EditDetailsPage());
         }
 
         private void btnTemplates_Click(object sender, RoutedEventArgs e)
         {
-            // We will load the Templates page here later
+            UpdateSidebarSelection(btnTemplates);
+            // Navigate to Templates page later
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            // We will load the Settings page here later
+            UpdateSidebarSelection(btnSettings);
+            // Navigate to Settings page later
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            // Ask the user for confirmation before logging out
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            // If the user clicks 'Yes', go back to the Login screen
+            MessageBoxResult result = MessageBox.Show("Do you want to logout?", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 MainWindow login = new MainWindow();
-                login.Show();       // Show the login window
-                this.Close();       // Close the dashboard window
+                login.Show();
+                this.Close();
             }
         }
     }
