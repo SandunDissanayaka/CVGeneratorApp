@@ -21,13 +21,13 @@ namespace CVGeneratorApp
             InitializeComponent();
         }
 
-        // App eka close karana code eka
+        // App close button
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        // Window eka mouse eken drag karanna puluwan karana code eka
+        // Window draging
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -36,7 +36,7 @@ namespace CVGeneratorApp
             }
         }
 
-        // Create account button eke code eka
+        // Create account button 
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             // Register window eka haduwama meka pawichchi karamu
