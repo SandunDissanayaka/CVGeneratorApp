@@ -11,20 +11,11 @@ using System.Windows.Shapes;
 
 namespace CVGeneratorApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        // App close button
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
 
         // Window draging
@@ -36,13 +27,23 @@ namespace CVGeneratorApp
             }
         }
 
-        // Create account button 
+        // App close 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+
+        // Create account
+        
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
-            // Register window eka haduwama meka pawichchi karamu
-            // RegisterWindow regWindow = new RegisterWindow();
-            // regWindow.Show();
-            // this.Close(); 
+            // Register window open 
+            RegisterWindow regWindow = new RegisterWindow();
+            regWindow.Show();
+
+            // Current Login window close
+            this.Close();
         }
     }
 }

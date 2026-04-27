@@ -116,7 +116,7 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Background="#EFEFEF" CornerRadius="15,0,0,15" ClipToBounds="True">
-                <Image Source="/images/Register.jpg" Stretch="UniformToFill" Margin="-32,68,4,68"/>
+                <Image Source="images/Register.jpg" Stretch="UniformToFill" Margin="-32,68,4,68"/>
             </Border>
 
             <StackPanel Grid.Column="1" Margin="40,20,40,20" VerticalAlignment="Center">
@@ -126,27 +126,11 @@
                 <TextBox x:Name="txtUsername" Style="{StaticResource TextBoxStyle}" Tag="Username"/>
                 <PasswordBox x:Name="txtPassword" Style="{StaticResource PasswordBoxStyle}" Tag="Password"/>
 
-                <Button Content="Register" Height="45" Background="#007ACC" Foreground="White" FontWeight="Bold" FontSize="15" Margin="0,10,0,0">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" CornerRadius="22">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button Content="Register" Style="{StaticResource PopUpSolidButton}"/>
 
                 <TextBlock Text="Already have an account?" Margin="0,20,0,10" HorizontalAlignment="Center" Foreground="Gray"/>
 
-                <Button Content="Back to Login" Height="45" Background="Transparent" Foreground="#007ACC" Click="BackToLogin_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" CornerRadius="22" BorderBrush="#007ACC" BorderThickness="1">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button Content="Back to Login" Style="{StaticResource PopUpOutlineButton}" Click="BackToLogin_Click"/>
             </StackPanel>
 
             <Border Grid.ColumnSpan="2" Height="40" VerticalAlignment="Top" Background="Transparent" MouseLeftButtonDown="Window_MouseDown"/>
