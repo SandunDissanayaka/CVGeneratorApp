@@ -1,74 +1,128 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CVGeneratorApp
 {
+    /// <summary>
+    /// Interaction logic for EducationControl.xaml
+    /// Handles dynamic forms for Degree, A/L, and O/L data entry.
+    /// </summary>
     public partial class EducationControl : UserControl
     {
-        // This list will hold the education items added by the user
+        // 🔴 වෙනස 1: අලුත් Collection එකක් හදන්නේ නෑ, Global එකට ලින්ක් කරන්න variable එකක් විතරක් හදනවා.
         public ObservableCollection<EducationItem> EducationList { get; set; }
 
         public EducationControl()
         {
             InitializeComponent();
-            EducationList = new ObservableCollection<EducationItem>();
-            lstEducation.ItemsSource = EducationList; // Link the list to the UI
+
+            // 🔴 වෙනස 2: Data List එක කෙළින්ම අපේ Global 'CVDataStore' එකෙන් අරන් බයින්ඩ් කරනවා.
+            EducationList = CVDataStore.Profile.EducationList;
+            lstEducation.ItemsSource = EducationList;
+
+            // Populate year dropdowns dynamically when the control loads
+            PopulateYears();
         }
+
+        /// <summary>
+        /// Generates a list of years (e.g., from 1990 to current year + 4) 
+        /// and populates all year-related ComboBoxes.
+        /// </summary>
+        private void PopulateYears()
+        {
+            int currentYear = DateTime.Now.Year;
+            // Generate years from current year + 4 (for expected graduation) down to 1990
+            for (int year = currentYear + 4; year >= 1990; year--)
+            {
+                cmbDegreeStart.Items.Add(year.ToString());
+                cmbDegreeEnd.Items.Add(year.ToString());
+                cmbALYear.Items.Add(year.ToString());
+                cmbOLYear.Items.Add(year.ToString());
+            }
+        }
+
+        // --- DYNAMIC UI LOGIC ---
+
+        private void cmbEduLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pnlDegree == null || pnlAL == null || pnlOL == null) return;
+
+            string selectedLevel = ((ComboBoxItem)cmbEduLevel.SelectedItem).Content.ToString();
+
+            pnlDegree.Visibility = Visibility.Collapsed;
+            pnlAL.Visibility = Visibility.Collapsed;
+            pnlOL.Visibility = Visibility.Collapsed;
+
+            if (selectedLevel.Contains("Degree")) pnlDegree.Visibility = Visibility.Visible;
+            else if (selectedLevel.Contains("A/L")) pnlAL.Visibility = Visibility.Visible;
+            else if (selectedLevel.Contains("O/L")) pnlOL.Visibility = Visibility.Visible;
+        }
+
+        // --- DATA ENTRY LOGIC ---
 
         private void btnAddEducation_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Get data from inputs
-            string university = cmbUniversity.Text;
-            string degree = cmbDegree.Text;
-            string duration = txtStartYear.Text + " - " + txtEndYear.Text;
-            string gpa = txtGPA.Text;
-
-            // 2. Simple validation to check if fields are not empty
-            if (!string.IsNullOrEmpty(university) && !string.IsNullOrEmpty(degree))
+            // Now we read from the ComboBox text instead of a TextBox
+            if (string.IsNullOrEmpty(cmbInstitution.Text))
             {
-                // 3. Create a new education item and add it to the list
-                EducationList.Add(new EducationItem
-                {
-                    University = university,
-                    Degree = degree,
-                    Duration = duration,
-                    GPA = gpa
-                });
+                MessageBox.Show("Please enter or select the Institution / School Name.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-                // 4. Clear inputs for the next entry
-                cmbUniversity.Text = "";
-                cmbDegree.Text = "";
-                txtStartYear.Clear();
-                txtEndYear.Clear();
-                txtGPA.Clear();
-            }
-            else
+            string level = ((ComboBoxItem)cmbEduLevel.SelectedItem).Content.ToString();
+            EducationItem newItem = new EducationItem { Institution = cmbInstitution.Text };
+
+            // Format data based on education level
+            if (level.Contains("Degree"))
             {
-                MessageBox.Show("Please fill at least the University and Degree fields.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                newItem.MainTitle = cmbDegree.Text;
+                newItem.Details = $"{cmbDegreeStart.Text} - {cmbDegreeEnd.Text} | GPA: {txtGPA.Text}";
             }
+            else if (level.Contains("A/L"))
+            {
+                newItem.MainTitle = $"G.C.E. Advanced Level ({cmbStream.Text})";
+                newItem.Details = $"Year: {cmbALYear.Text} | Index: {txtALIndex.Text}\nResults: {txtALResults.Text}";
+            }
+            else if (level.Contains("O/L"))
+            {
+                newItem.MainTitle = "G.C.E. Ordinary Level";
+                newItem.Details = $"Year: {cmbOLYear.Text} | Index: {txtOLIndex.Text}\nResults: {txtOLResults.Text}";
+            }
+
+            EducationList.Add(newItem);
+
+            // 🔴 වෙනස 3: අලුතින් Education එකක් Add කරපු ගමන් JSON ෆයිල් එකට Save කරනවා.
+            CVDataStore.Save();
+
+            // Clear fields after successful addition
+            cmbInstitution.Text = string.Empty;
+            cmbDegreeStart.Text = string.Empty;
+            cmbDegreeEnd.Text = string.Empty;
+            txtGPA.Clear();
+
+            cmbALYear.Text = string.Empty;
+            txtALIndex.Clear();
+            txtALResults.Clear();
+
+            cmbOLYear.Text = string.Empty;
+            txtOLIndex.Clear();
+            txtOLResults.Clear();
         }
 
         private void RemoveEducation_Click(object sender, RoutedEventArgs e)
         {
-            // Find which item's 'Remove' button was clicked
             var button = sender as Button;
-            var item = button.DataContext as EducationItem;
-
-            // Remove it from the list
-            if (item != null)
+            if (button?.DataContext is EducationItem item)
             {
                 EducationList.Remove(item);
+
+                // 🔴 වෙනස 4: ලිස්ට් එකෙන් එකක් Remove කරපු ගමන් JSON ෆයිල් එක අප්ඩේට් කරනවා.
+                CVDataStore.Save();
             }
         }
     }
 
-    // A simple class to store education data
-    public class EducationItem
-    {
-        public string University { get; set; }
-        public string Degree { get; set; }
-        public string Duration { get; set; }
-        public string GPA { get; set; }
-    }
+    
 }

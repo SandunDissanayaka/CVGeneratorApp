@@ -60,9 +60,6 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#005A9E"/>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#004578"/>
-                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -86,8 +83,6 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#F5F5F5"/>
-                                <Setter Property="Foreground" Value="#333333"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#CCCCCC"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -115,6 +110,7 @@
                     <Button x:Name="btnEducation" Content="🎓   Education" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
                     <Button x:Name="btnExperience" Content="💼   Work Experience" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
                     <Button x:Name="btnSkills" Content="🛠   Skills &amp; Projects" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
+                    <Button x:Name="btnLanguages" Content="🌐   Languages" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
                 </StackPanel>
 
                 <Button x:Name="btnPreview" Grid.Row="1" Content="👁   Preview &amp; Export" 
@@ -135,8 +131,8 @@
             <Frame x:Name="SubContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Back" Style="{StaticResource SecondaryActionButton}" Width="100" Margin="0,0,12,0"/>
-                <Button Content="Save &amp; Next" Style="{StaticResource PrimaryActionButton}" Width="130"/>
+                <Button x:Name="btnBack" Content="Back" Style="{StaticResource SecondaryActionButton}" Width="100" Margin="0,0,12,0" Click="btnBack_Click"/>
+                <Button x:Name="btnSaveNext" Content="Save &amp; Next" Style="{StaticResource PrimaryActionButton}" Width="130" Click="btnSaveNext_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

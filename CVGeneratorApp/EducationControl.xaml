@@ -10,10 +10,10 @@
             <Setter Property="Foreground" Value="#555555"/>
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
-
         <Style x:Key="ModernInput" TargetType="Control">
             <Setter Property="Height" Value="38"/>
             <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Padding" Value="10,5"/>
         </Style>
     </UserControl.Resources>
 
@@ -25,50 +25,110 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <TextBlock Text="University / School Name" Style="{StaticResource FieldLabel}"/>
-            <ComboBox x:Name="cmbUniversity" IsEditable="True" Style="{StaticResource ModernInput}">
+            <TextBlock Text="Education Level" Style="{StaticResource FieldLabel}"/>
+            <ComboBox x:Name="cmbEduLevel" Style="{StaticResource ModernInput}" SelectionChanged="cmbEduLevel_SelectionChanged">
+                <ComboBoxItem Content="University Degree / Diploma" IsSelected="True"/>
+                <ComboBoxItem Content="G.C.E. Advanced Level (A/L)"/>
+                <ComboBoxItem Content="G.C.E. Ordinary Level (O/L)"/>
+            </ComboBox>
+
+            <TextBlock Text="Institution / School Name" Style="{StaticResource FieldLabel}"/>
+            <ComboBox x:Name="cmbInstitution" IsEditable="True" Style="{StaticResource ModernInput}">
                 <ComboBoxItem Content="University of Sri Jayewardenepura"/>
                 <ComboBoxItem Content="University of Moratuwa"/>
                 <ComboBoxItem Content="University of Colombo"/>
                 <ComboBoxItem Content="University of Kelaniya"/>
-                <ComboBoxItem Content="SLIIT (Sri Lanka Institute of Information Technology)"/>
-                <ComboBoxItem Content="IIT (Informatics Institute of Technology)"/>
+                <ComboBoxItem Content="University of Peradeniya"/>
+                <ComboBoxItem Content="University of Ruhuna"/>
+                <ComboBoxItem Content="Sri Lanka Institute of Information Technology (SLIIT)"/>
+                <ComboBoxItem Content="Informatics Institute of Technology (IIT)"/>
                 <ComboBoxItem Content="NSBM Green University"/>
                 <ComboBoxItem Content="General Sir John Kotelawala Defence University (KDU)"/>
+                <ComboBoxItem Content="National Institute of Business Management (NIBM)"/>
+                <ComboBoxItem Content="APIIT Sri Lanka"/>
             </ComboBox>
 
-            <TextBlock Text="Degree / Diploma / Qualification" Style="{StaticResource FieldLabel}"/>
-            <ComboBox x:Name="cmbDegree" IsEditable="True" Style="{StaticResource ModernInput}">
-                <ComboBoxItem Content="BSc (Hons) in Information Technology"/>
-                <ComboBoxItem Content="BSc (Hons) in Computer Science"/>
-                <ComboBoxItem Content="BSc (Hons) in Software Engineering"/>
-                <ComboBoxItem Content="BSc (Hons) in Management Information Systems"/>
-                <ComboBoxItem Content="BSc (Hons) in Data Science"/>
-                <ComboBoxItem Content="Bachelor of Business Management (BBM)"/>
-            </ComboBox>
+            <StackPanel x:Name="pnlDegree" Visibility="Visible">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Start Year" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox x:Name="cmbDegreeStart" IsEditable="True" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="End Year" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox x:Name="cmbDegreeEnd" IsEditable="True" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                </Grid>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <TextBlock Text="Degree / Qualification" Style="{StaticResource FieldLabel}"/>
+                <ComboBox x:Name="cmbDegree" IsEditable="True" Style="{StaticResource ModernInput}">
+                    <ComboBoxItem Content="BSc (Hons) in Information Technology"/>
+                    <ComboBoxItem Content="BSc (Hons) in Computer Science"/>
+                    <ComboBoxItem Content="BSc (Hons) in Software Engineering"/>
+                    <ComboBoxItem Content="BSc (Hons) in Information Systems"/>
+                    <ComboBoxItem Content="BSc (Hons) in Data Science"/>
+                    <ComboBoxItem Content="BSc (Hons) in Cyber Security"/>
+                    <ComboBoxItem Content="Bachelor of Information Technology (BIT)"/>
+                    <ComboBoxItem Content="BSc in Business Management"/>
+                </ComboBox>
 
-                <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                    <TextBlock Text="Start Year" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="txtStartYear" Padding="10,5" Height="38" Margin="0,0,0,15"/>
-                </StackPanel>
+                <TextBlock Text="GPA / Class" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtGPA" Style="{StaticResource ModernInput}"/>
+            </StackPanel>
 
-                <StackPanel Grid.Column="1" Margin="10,0,10,0">
-                    <TextBlock Text="End Year" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="txtEndYear" Padding="10,5" Height="38" Margin="0,0,0,15" Tag="Expected Year"/>
-                </StackPanel>
+            <StackPanel x:Name="pnlAL" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Examination Year" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox x:Name="cmbALYear" IsEditable="True" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Index Number" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtALIndex" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                </Grid>
 
-                <StackPanel Grid.Column="2" Margin="10,0,0,0">
-                    <TextBlock Text="GPA / Grade" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="txtGPA" Padding="10,5" Height="38" Margin="0,0,0,15"/>
-                </StackPanel>
-            </Grid>
+                <TextBlock Text="Stream" Style="{StaticResource FieldLabel}"/>
+                <ComboBox x:Name="cmbStream" IsEditable="True" Style="{StaticResource ModernInput}">
+                    <ComboBoxItem Content="Physical Science (Maths)"/>
+                    <ComboBoxItem Content="Biological Science"/>
+                    <ComboBoxItem Content="Commerce"/>
+                    <ComboBoxItem Content="Arts"/>
+                    <ComboBoxItem Content="Technology"/>
+                </ComboBox>
+
+                <TextBlock Text="Results Summary (e.g., 2A, 1B / Z-Score: 1.85)" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtALResults" Style="{StaticResource ModernInput}"/>
+            </StackPanel>
+
+            <StackPanel x:Name="pnlOL" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Examination Year" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox x:Name="cmbOLYear" IsEditable="True" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Index Number" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtOLIndex" Style="{StaticResource ModernInput}"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Results Summary (e.g., Passed with 9 A's)" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtOLResults" Style="{StaticResource ModernInput}"/>
+            </StackPanel>
+
         </StackPanel>
 
         <Button x:Name="btnAddEducation" Grid.Row="1" Content="+ Add Education" 
@@ -89,13 +149,9 @@
                         <Border Background="#F9F9F9" CornerRadius="8" Padding="15" Margin="0,0,0,10" BorderBrush="#EEEEEE" BorderThickness="1">
                             <Grid>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Degree}" FontWeight="Bold" FontSize="15" Foreground="#333333"/>
-                                    <TextBlock Text="{Binding University}" FontSize="13" Foreground="#666666" Margin="0,2,0,5"/>
-                                    <TextBlock FontSize="12" Foreground="#888888">
-                                        <Run Text="{Binding Duration}"/>
-                                        <Run Text="  |  GPA: "/>
-                                        <Run Text="{Binding GPA}"/>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding MainTitle}" FontWeight="Bold" FontSize="15" Foreground="#333333"/>
+                                    <TextBlock Text="{Binding Institution}" FontSize="13" Foreground="#666666" Margin="0,2,0,5"/>
+                                    <TextBlock Text="{Binding Details}" FontSize="12" Foreground="#888888" TextWrapping="Wrap"/>
                                 </StackPanel>
                                 <Button Content="Remove" HorizontalAlignment="Right" VerticalAlignment="Center" 
                                         Background="Transparent" Foreground="#FF4444" BorderThickness="0" Cursor="Hand"

@@ -9,6 +9,10 @@ namespace CVGeneratorApp
         public DashboardWindow()
         {
             InitializeComponent();
+
+            // LOAD SAVED DATA WHEN APP STARTS
+            CVDataStore.Load();
+
             // Start the app by showing the Home Page
             MainContentFrame.Navigate(new HomePage());
         }
@@ -41,7 +45,8 @@ namespace CVGeneratorApp
         private void btnTemplates_Click(object sender, RoutedEventArgs e)
         {
             UpdateSidebarSelection(btnTemplates);
-            // Navigate to Templates page later
+            // NOW IT WORKS: Navigates to the Preview Page
+            MainContentFrame.Navigate(new PreviewPage());
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="CVGeneratorApp.Templates.Template1Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <Viewbox Stretch="Uniform">
+        <Border Width="794" Height="1123" Background="White" 
+                BorderBrush="#CCCCCC" BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="3" Opacity="0.2"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#1E293B" Padding="25,40,25,40">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <Border Width="140" Height="140" CornerRadius="70" BorderBrush="White" BorderThickness="3" Background="#334155" HorizontalAlignment="Center">
+                                <TextBlock Text="👤" FontSize="60" Foreground="#94A3B8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Text="CONTACT" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,40,0,10"/>
+                            <Rectangle Height="2" Fill="#3B82F6" HorizontalAlignment="Left" Width="40" Margin="0,0,0,15"/>
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="📞 Phone" Foreground="#94A3B8" FontSize="12"/>
+                                <TextBlock Text="+94 7X XXX XXXX" Foreground="White" FontSize="13" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="✉️ Email" Foreground="#94A3B8" FontSize="12"/>
+                                <TextBlock Text="sandun@email.com" Foreground="White" FontSize="13" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="📍 Location" Foreground="#94A3B8" FontSize="12"/>
+                                <TextBlock Text="Colombo, Sri Lanka" Foreground="White" FontSize="13" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="TECH SKILLS" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,30,0,10"/>
+                            <Rectangle Height="2" Fill="#3B82F6" HorizontalAlignment="Left" Width="40" Margin="0,0,0,15"/>
+                            <TextBlock Text="• C# &amp; .NET" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                            <TextBlock Text="• WPF Application Dev" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                            <TextBlock Text="• SQL / Databases" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+
+                            <TextBlock Text="LANGUAGES" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,30,0,10"/>
+                            <Rectangle Height="2" Fill="#3B82F6" HorizontalAlignment="Left" Width="40" Margin="0,0,0,15"/>
+                            <TextBlock Text="• English (Professional)" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                            <TextBlock Text="• Sinhala (Native)" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="LINKS" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <Rectangle Height="2" Fill="#3B82F6" HorizontalAlignment="Left" Width="40" Margin="0,0,0,15"/>
+                            <TextBlock Text="linkedin.com/in/sandun" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                            <TextBlock Text="github.com/sandun" Foreground="White" FontSize="13" Margin="0,0,0,5"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" Background="White" Padding="40">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Text="SANDUN DISSANAYAKA" FontSize="36" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <TextBlock Text="Software Engineer | IT Undergraduate" FontSize="18" Foreground="#3B82F6" FontWeight="SemiBold" Margin="0,0,0,30"/>
+
+                            <TextBlock Text="SUMMARY" FontSize="18" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <Rectangle Height="2" Fill="#E2E8F0" Margin="0,0,0,10"/>
+                            <TextBlock Text="A highly motivated IT undergraduate with a passion for software development and UI/UX design. Experienced in building desktop applications using C# and WPF." TextWrapping="Wrap" FontSize="13" Foreground="#475569" LineHeight="20" Margin="0,0,0,25"/>
+
+                            <TextBlock Text="WORK EXPERIENCE" FontSize="18" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <Rectangle Height="2" Fill="#E2E8F0" Margin="0,0,0,10"/>
+                            <StackPanel Margin="0,0,0,25">
+                                <Grid>
+                                    <TextBlock Text="Software Engineering Trainee" FontWeight="Bold" FontSize="15" Foreground="#1E293B"/>
+                                    <TextBlock Text="Jan 2024 - Present" HorizontalAlignment="Right" FontSize="13" Foreground="#64748B" FontWeight="SemiBold"/>
+                                </Grid>
+                                <TextBlock Text="Tech Solutions Lanka (Pvt) Ltd" FontSize="14" Foreground="#3B82F6" Margin="0,2,0,5"/>
+                                <TextBlock Text="• Developed and maintained user interfaces for enterprise desktop applications using C# and WPF." TextWrapping="Wrap" FontSize="13" Foreground="#475569" LineHeight="20"/>
+                            </StackPanel>
+
+                            <TextBlock Text="EDUCATION" FontSize="18" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <Rectangle Height="2" Fill="#E2E8F0" Margin="0,0,0,10"/>
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="BSc (Hons) in Information Technology" FontWeight="Bold" FontSize="15" Foreground="#1E293B"/>
+                                    <TextBlock Text="University of Sri Jayewardenepura" FontSize="14" Foreground="#3B82F6" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="2022 - 2026" FontSize="13" Foreground="#64748B" FontWeight="SemiBold"/>
+                            </Grid>
+
+                            <TextBlock Text="RECENT PROJECTS" FontSize="18" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <Rectangle Height="2" Fill="#E2E8F0" Margin="0,0,0,10"/>
+                            <StackPanel Margin="0,0,0,25">
+                                <Grid>
+                                    <TextBlock Text="Standalone CV Generator App" FontWeight="Bold" FontSize="15" Foreground="#1E293B"/>
+                                    <TextBlock Text="C# / WPF" HorizontalAlignment="Right" FontSize="13" Foreground="#3B82F6" FontWeight="SemiBold"/>
+                                </Grid>
+                                <TextBlock Text="Developed a modern desktop application for creating professional CVs." TextWrapping="Wrap" FontSize="13" Foreground="#475569" LineHeight="20" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="REFERENCES" FontSize="18" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,5"/>
+                            <Rectangle Height="2" Fill="#E2E8F0" Margin="0,0,0,10"/>
+                            <TextBlock Text="Available upon request." FontSize="13" Foreground="#475569" FontStyle="Italic"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Viewbox>
+</UserControl>

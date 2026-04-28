@@ -4,76 +4,107 @@ using System.Windows.Controls;
 
 namespace CVGeneratorApp
 {
-    /// <summary>
-    /// Logic for navigating between different CV sections within the Edit Details page.
-    /// </summary>
     public partial class EditDetailsPage : Page
     {
         public EditDetailsPage()
         {
             InitializeComponent();
 
-            // Load Personal Info as the default view when the page opens
+            // Default section when the page loads
             SubContentFrame.Navigate(new PersonalInfoControl());
-
-            // Highlight the 'Personal Info' button in the sidebar by default
-            UpdateSubTabSelection(btnPersonalInfo);
         }
 
-        /// <summary>
-        /// Resets the styles of all sub-tab buttons and highlights the currently active one.
-        /// </summary>
-        /// <param name="activeBtn">The button that was clicked/selected</param>
-        private void UpdateSubTabSelection(Button activeBtn)
+        // --- SIDEBAR NAVIGATION LOGIC ---
+        private void SubTab_Click(object sender, RoutedEventArgs e)
         {
-            // Reset all sub-tab buttons to the default 'SubTabButton' style
+            if (sender is Button btn)
+            {
+                // Navigate based on which sidebar button was clicked
+                switch (btn.Name)
+                {
+                    case "btnPersonalInfo":
+                        SubContentFrame.Navigate(new PersonalInfoControl());
+                        txtSectionTitle.Text = "Personal Information";
+                        break;
+                    case "btnEducation":
+                        SubContentFrame.Navigate(new EducationControl());
+                        txtSectionTitle.Text = "Education Details";
+                        break;
+                    case "btnExperience":
+                        SubContentFrame.Navigate(new ExperienceControl());
+                        txtSectionTitle.Text = "Work Experience";
+                        break;
+                    case "btnSkills":
+                        SubContentFrame.Navigate(new SkillsControl());
+                        txtSectionTitle.Text = "Skills & Projects";
+                        break;
+                    case "btnLanguages":
+                        SubContentFrame.Navigate(new LanguagesControl());
+                        txtSectionTitle.Text = "Languages";
+                        break;
+                }
+                UpdateSubTabSelection(btn);
+            }
+        }
+
+        // --- SAVE & NEXT BUTTON LOGIC ---
+        private void btnSaveNext_Click(object sender, RoutedEventArgs e)
+        {
+            var currentContent = SubContentFrame.Content;
+
+            // 1. If currently on Personal Info, Save data and Move to Education
+            if (currentContent is PersonalInfoControl personalPage)
+            {
+                var data = CVDataStore.Profile.PersonalInfo;
+                data.FullName = personalPage.txtFullName.Text;
+                data.JobTitle = personalPage.cmbTitle.Text;
+                data.Email = personalPage.txtEmail.Text;
+                data.Phone = personalPage.txtPhone.Text;
+                data.LinkedIn = personalPage.txtLinkedIn.Text;
+                data.GitHub = personalPage.txtGitHub.Text;
+                data.Location = personalPage.txtAddress.Text;
+
+                CVDataStore.Save(); // Persistent JSON Save
+
+                SubContentFrame.Navigate(new EducationControl());
+                UpdateSubTabSelection(btnEducation);
+                txtSectionTitle.Text = "Education Details";
+            }
+            // 2. Navigation logic for other pages
+            else if (currentContent is EducationControl)
+            {
+                SubContentFrame.Navigate(new ExperienceControl());
+                UpdateSubTabSelection(btnExperience);
+                txtSectionTitle.Text = "Work Experience";
+            }
+            else if (currentContent is ExperienceControl)
+            {
+                SubContentFrame.Navigate(new SkillsControl());
+                UpdateSubTabSelection(btnSkills);
+                txtSectionTitle.Text = "Skills & Projects";
+            }
+        }
+
+        // --- BACK BUTTON LOGIC ---
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (SubContentFrame.CanGoBack)
+            {
+                SubContentFrame.GoBack();
+                // Optionally add code here to sync the sidebar highlight
+            }
+        }
+
+        // --- HELPER: Update Sidebar Styles ---
+        public void UpdateSubTabSelection(Button selectedButton)
+        {
             btnPersonalInfo.Style = (Style)FindResource("SubTabButton");
             btnEducation.Style = (Style)FindResource("SubTabButton");
             btnExperience.Style = (Style)FindResource("SubTabButton");
             btnSkills.Style = (Style)FindResource("SubTabButton");
+            btnLanguages.Style = (Style)FindResource("SubTabButton");
 
-            // Apply the 'ActiveSubTabButton' style to the selected button
-            activeBtn.Style = (Style)FindResource("ActiveSubTabButton");
-        }
-
-        /// <summary>
-        /// Handles click events for all sidebar sub-tabs to switch between different forms.
-        /// </summary>
-        private void SubTab_Click(object sender, RoutedEventArgs e)
-        {
-            Button clickedButton = (Button)sender;
-
-            // Update the UI to show which tab is currently selected
-            UpdateSubTabSelection(clickedButton);
-
-            // Get the text content of the button to identify the target section
-            string sectionName = clickedButton.Content.ToString();
-
-            // 1. Navigation for the Personal Information section
-            if (sectionName.Contains("Personal"))
-            {
-                txtSectionTitle.Text = "Personal Information";
-                SubContentFrame.Navigate(new PersonalInfoControl());
-            }
-            // 2. Navigation for the Education section
-            else if (sectionName.Contains("Education"))
-            {
-                txtSectionTitle.Text = "Education Details";
-                SubContentFrame.Navigate(new EducationControl());
-            }
-            // 3. Navigation for the Work Experience section
-            else if (sectionName.Contains("Work"))
-            {
-                txtSectionTitle.Text = "Work Experience";
-                SubContentFrame.Navigate(new ExperienceControl());
-            }
-            // 4. Navigation for the Skills & Projects section
-            else if (sectionName.Contains("Skills"))
-            {
-                txtSectionTitle.Text = "Skills & Projects";
-                // Now navigating to the SkillsControl we just implemented
-                SubContentFrame.Navigate(new SkillsControl());
-            }
+            selectedButton.Style = (Style)FindResource("ActiveSubTabButton");
         }
     }
 }
