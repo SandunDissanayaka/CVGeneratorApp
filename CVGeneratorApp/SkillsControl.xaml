@@ -33,96 +33,97 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="10">
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,25">
-            <TextBlock Text="Technical Skills" Style="{StaticResource FieldLabel}"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+        <StackPanel Margin="0,0,10,20">
 
-                <ComboBox x:Name="cmbTechInput" IsEditable="True" Height="38" VerticalContentAlignment="Center" Padding="10,0">
-                    <ComboBoxItem Content="C# Programming"/>
-                    <ComboBoxItem Content="Java"/>
-                    <ComboBoxItem Content="Python"/>
-                    <ComboBoxItem Content="SQL / Databases"/>
-                    <ComboBoxItem Content="Web Development (HTML/CSS)"/>
-                    <ComboBoxItem Content="Software Testing"/>
-                </ComboBox>
+            <StackPanel Margin="0,0,0,25">
+                <TextBlock Text="Technical Skills" Style="{StaticResource FieldLabel}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnAddTechSkill" Grid.Column="1" Content="Add Skill" 
-                        Style="{StaticResource SkillAddButton}" Height="38" Margin="10,0,0,0"
-                        Click="btnAddTechSkill_Click"/>
-            </Grid>
-            <WrapPanel x:Name="pnlTechTags" Margin="0,10,0,0"/>
-        </StackPanel>
+                    <ComboBox x:Name="cmbTechInput" IsEditable="True" Height="38" VerticalContentAlignment="Center" Padding="10,0">
+                        <ComboBoxItem Content="C# Programming"/>
+                        <ComboBoxItem Content="Java"/>
+                        <ComboBoxItem Content="Python"/>
+                        <ComboBoxItem Content="SQL / Databases"/>
+                        <ComboBoxItem Content="Web Development (HTML/CSS)"/>
+                        <ComboBoxItem Content="Software Testing"/>
+                    </ComboBox>
 
-        <StackPanel Grid.Row="1" Margin="0,0,0,30">
-            <TextBlock Text="Soft Skills" Style="{StaticResource FieldLabel}"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <ComboBox x:Name="cmbSoftInput" IsEditable="True" Height="38" VerticalContentAlignment="Center" Padding="10,0">
-                    <ComboBoxItem Content="Leadership"/>
-                    <ComboBoxItem Content="Effective Communication"/>
-                    <ComboBoxItem Content="Teamwork"/>
-                    <ComboBoxItem Content="Problem Solving"/>
-                    <ComboBoxItem Content="Time Management"/>
-                    <ComboBoxItem Content="Critical Thinking"/>
-                </ComboBox>
-
-                <Button x:Name="btnAddSoftSkill" Grid.Column="1" Content="Add Skill" 
-                        Style="{StaticResource SkillAddButton}" Height="38" Margin="10,0,0,0"
-                        Click="btnAddSoftSkill_Click"/>
-            </Grid>
-            <WrapPanel x:Name="pnlSoftTags" Margin="0,10,0,0"/>
-        </StackPanel>
-
-        <Border Grid.Row="2" BorderBrush="#EEEEEE" BorderThickness="0,1,0,0" Padding="0,20,0,0">
-            <StackPanel>
-                <TextBlock Text="Recent Projects" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
-
-                <TextBlock Text="Project Title" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="txtProjectTitle" Height="38" Padding="10,8" Margin="0,0,0,15"/>
-
-                <TextBlock Text="Description &amp; Tech Stack" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="txtProjectDesc" Height="60" Padding="10,5" Margin="0,0,0,15" AcceptsReturn="True" TextWrapping="Wrap"/>
-
-                <Button x:Name="btnAddProject" Content="+ Add Project" 
-                        HorizontalAlignment="Left" Padding="20,10" Margin="0,5,0,20"
-                        Background="Transparent" BorderBrush="#007ACC" Foreground="#007ACC" 
-                        FontWeight="Bold" Cursor="Hand" Click="btnAddProject_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                    <Button x:Name="btnAddTechSkill" Grid.Column="1" Content="Add Skill" 
+                            Style="{StaticResource SkillAddButton}" Height="38" Margin="10,0,0,0"
+                            Click="btnAddTechSkill_Click"/>
+                </Grid>
+                <WrapPanel x:Name="pnlTechTags" Margin="0,10,0,0"/>
             </StackPanel>
-        </Border>
 
-        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="lstProjects">
+            <StackPanel Margin="0,0,0,30">
+                <TextBlock Text="Soft Skills" Style="{StaticResource FieldLabel}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="cmbSoftInput" IsEditable="True" Height="38" VerticalContentAlignment="Center" Padding="10,0">
+                        <ComboBoxItem Content="Leadership"/>
+                        <ComboBoxItem Content="Effective Communication"/>
+                        <ComboBoxItem Content="Teamwork"/>
+                        <ComboBoxItem Content="Problem Solving"/>
+                        <ComboBoxItem Content="Time Management"/>
+                        <ComboBoxItem Content="Critical Thinking"/>
+                    </ComboBox>
+
+                    <Button x:Name="btnAddSoftSkill" Grid.Column="1" Content="Add Skill" 
+                            Style="{StaticResource SkillAddButton}" Height="38" Margin="10,0,0,0"
+                            Click="btnAddSoftSkill_Click"/>
+                </Grid>
+                <WrapPanel x:Name="pnlSoftTags" Margin="0,10,0,0"/>
+            </StackPanel>
+
+            <Border BorderBrush="#EEEEEE" BorderThickness="0,1,0,0" Padding="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="Recent Projects" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Project Title" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="txtProjectTitle" Height="38" Padding="10,8" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Description &amp; Tech Stack" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="txtProjectDesc" Height="60" Padding="10,5" Margin="0,0,0,15" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                    <Button x:Name="btnAddProject" Content="+ Add Project" 
+                            HorizontalAlignment="Left" Padding="20,10" Margin="0,5,0,20"
+                            Background="Transparent" BorderBrush="#007ACC" Foreground="#007ACC" 
+                            FontWeight="Bold" Cursor="Hand" Click="btnAddProject_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <ItemsControl x:Name="lstProjects" Margin="0,10,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Background="#F9F9F9" CornerRadius="8" Padding="15" Margin="0,0,0,10" BorderBrush="#EEEEEE" BorderThickness="1">
                             <Grid>
-                                <StackPanel>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,15,0">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" Foreground="#333333"/>
                                     <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#666666" Margin="0,3,0,0" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <Button Content="Remove" HorizontalAlignment="Right" VerticalAlignment="Top" 
+
+                                <Button Grid.Column="1" Content="Remove" HorizontalAlignment="Right" VerticalAlignment="Center" 
                                         Background="Transparent" Foreground="#FF4444" BorderThickness="0" Cursor="Hand"
                                         Click="RemoveProject_Click"/>
                             </Grid>
@@ -130,6 +131,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
-    </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -112,9 +112,6 @@
                     <Button x:Name="btnSkills" Content="🛠   Skills &amp; Projects" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
                     <Button x:Name="btnLanguages" Content="🌐   Languages" Style="{StaticResource SubTabButton}" Click="SubTab_Click"/>
                 </StackPanel>
-
-                <Button x:Name="btnPreview" Grid.Row="1" Content="👁   Preview &amp; Export" 
-                        Style="{StaticResource PrimaryActionButton}" Margin="15,0,15,25"/>
             </Grid>
         </Border>
 
@@ -129,10 +126,38 @@
                        FontSize="28" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,30"/>
 
             <Frame x:Name="SubContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
-
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+
                 <Button x:Name="btnBack" Content="Back" Style="{StaticResource SecondaryActionButton}" Width="100" Margin="0,0,12,0" Click="btnBack_Click"/>
+
                 <Button x:Name="btnSaveNext" Content="Save &amp; Next" Style="{StaticResource PrimaryActionButton}" Width="130" Click="btnSaveNext_Click"/>
+
+                <Button x:Name="btnGoToTemplates" Content="Go to Templates ➔" Width="170" Margin="12,0,0,0" Cursor="Hand" Visibility="Collapsed" Click="btnGoToTemplates_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#28A745"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#1E7E34"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
             </StackPanel>
         </Grid>
     </Grid>

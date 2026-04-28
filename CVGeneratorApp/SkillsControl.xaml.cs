@@ -8,103 +8,51 @@ namespace CVGeneratorApp
 {
     public partial class SkillsControl : UserControl
     {
-        // Link to Global Store Collections
+        // Property to link the local collection to the Global Data Store
         public ObservableCollection<ProjectItem> ProjectList { get; set; }
-        public ObservableCollection<SkillItem> SkillList { get; set; }
 
         public SkillsControl()
         {
             InitializeComponent();
 
-            // 1. Link the local properties to the Global Store
+            // Bind the JSON Data Store list to the UI ItemsControl
             ProjectList = CVDataStore.Profile.ProjectList;
-            SkillList = CVDataStore.Profile.SkillList;
-
             lstProjects.ItemsSource = ProjectList;
 
-            // 2. Load existing skills from the store and create tags on screen
+            // Load saved skills when the page opens
             LoadExistingSkills();
         }
 
+        // --- SKILL LOADING LOGIC ---
         private void LoadExistingSkills()
         {
-            // Clear current UI panels
+            // Clear existing UI elements to prevent duplicates
             pnlTechTags.Children.Clear();
             pnlSoftTags.Children.Clear();
 
-            // Loop through the saved skills and recreate the UI Tags
-            foreach (var skill in SkillList)
+            // Load technical skills
+            if (CVDataStore.Profile.TechnicalSkills != null)
             {
-                // We determine if it's Tech or Soft skill based on some logic or just add to tech for now
-                // For a more advanced version, you can add a 'Type' property to SkillItem
-                CreateSkillTag(skill.Name, pnlTechTags, "#E3F2FD", "#1976D2", skill);
+                foreach (var skill in CVDataStore.Profile.TechnicalSkills)
+                {
+                    pnlTechTags.Children.Add(CreateSkillTag(skill, true));
+                }
+            }
+
+            // Load soft skills
+            if (CVDataStore.Profile.SoftSkills != null)
+            {
+                foreach (var skill in CVDataStore.Profile.SoftSkills)
+                {
+                    pnlSoftTags.Children.Add(CreateSkillTag(skill, false));
+                }
             }
         }
 
-        // --- SKILLS LOGIC ---
-
-        private void btnAddTechSkill_Click(object sender, RoutedEventArgs e)
-        {
-            AddSkill(cmbTechInput, pnlTechTags, "#E3F2FD", "#1976D2");
-        }
-
-        private void btnAddSoftSkill_Click(object sender, RoutedEventArgs e)
-        {
-            AddSkill(cmbSoftInput, pnlSoftTags, "#F1F8E9", "#689F38");
-        }
-
-        private void AddSkill(ComboBox input, WrapPanel panel, string bgColor, string borderColor)
-        {
-            string skillText = input.Text.Trim();
-            if (!string.IsNullOrEmpty(skillText))
-            {
-                // Create the data object
-                var newSkill = new SkillItem { Name = skillText };
-                SkillList.Add(newSkill);
-
-                // Create the UI Tag
-                CreateSkillTag(skillText, panel, bgColor, borderColor, newSkill);
-
-                input.Text = string.Empty;
-                CVDataStore.Save(); // 🔴 Save to JSON
-            }
-        }
-
-        private void CreateSkillTag(string skill, WrapPanel panel, string bgColor, string borderColor, SkillItem dataItem)
-        {
-            Border tagBorder = new Border
-            {
-                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(bgColor)),
-                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(borderColor)),
-                BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(15),
-                Padding = new Thickness(12, 5, 12, 5),
-                Margin = new Thickness(0, 0, 8, 8)
-            };
-
-            StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
-            TextBlock txt = new TextBlock { Text = skill, Foreground = tagBorder.BorderBrush, VerticalAlignment = VerticalAlignment.Center };
-
-            Button btnDelete = new Button { Content = " ✕", Foreground = Brushes.Gray, Background = Brushes.Transparent, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, Margin = new Thickness(5, 0, 0, 0) };
-
-            // Delete logic
-            btnDelete.Click += (s, e) => {
-                panel.Children.Remove(tagBorder);
-                SkillList.Remove(dataItem); // Remove from Global Store
-                CVDataStore.Save(); // 🔴 Save to JSON
-            };
-
-            stack.Children.Add(txt);
-            stack.Children.Add(btnDelete);
-            tagBorder.Child = stack;
-            panel.Children.Add(tagBorder);
-        }
-
-        // --- PROJECTS LOGIC ---
-
+        // --- ADD PROJECT LOGIC ---
         private void btnAddProject_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtProjectTitle.Text))
+            if (!string.IsNullOrWhiteSpace(txtProjectTitle.Text))
             {
                 ProjectList.Add(new ProjectItem
                 {
@@ -112,21 +60,135 @@ namespace CVGeneratorApp
                     Description = txtProjectDesc.Text
                 });
 
-                CVDataStore.Save(); // 🔴 Save to JSON
+                CVDataStore.Save();
 
                 txtProjectTitle.Clear();
                 txtProjectDesc.Clear();
             }
+            else
+            {
+                MessageBox.Show("Please enter a Project Title.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
+        // --- REMOVE PROJECT LOGIC ---
         private void RemoveProject_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            if (button?.DataContext is ProjectItem item)
+            var item = button?.DataContext as ProjectItem;
+
+            if (item != null)
             {
                 ProjectList.Remove(item);
-                CVDataStore.Save(); // 🔴 Save to JSON
+                CVDataStore.Save();
             }
+        }
+
+        // --- ADD TECHNICAL SKILL LOGIC ---
+        private void btnAddTechSkill_Click(object sender, RoutedEventArgs e)
+        {
+            string skill = cmbTechInput.Text.Trim();
+
+            // Check if input is valid and not already in the list
+            if (!string.IsNullOrWhiteSpace(skill) && !CVDataStore.Profile.TechnicalSkills.Contains(skill))
+            {
+                // Save to Data Store
+                CVDataStore.Profile.TechnicalSkills.Add(skill);
+                CVDataStore.Save();
+
+                // Add tag visually to the UI
+                pnlTechTags.Children.Add(CreateSkillTag(skill, true));
+
+                // Clear input
+                cmbTechInput.Text = string.Empty;
+            }
+        }
+
+        // --- ADD SOFT SKILL LOGIC ---
+        private void btnAddSoftSkill_Click(object sender, RoutedEventArgs e)
+        {
+            string skill = cmbSoftInput.Text.Trim();
+
+            // Check if input is valid and not already in the list
+            if (!string.IsNullOrWhiteSpace(skill) && !CVDataStore.Profile.SoftSkills.Contains(skill))
+            {
+                // Save to Data Store
+                CVDataStore.Profile.SoftSkills.Add(skill);
+                CVDataStore.Save();
+
+                // Add tag visually to the UI
+                pnlSoftTags.Children.Add(CreateSkillTag(skill, false));
+
+                // Clear input
+                cmbSoftInput.Text = string.Empty;
+            }
+        }
+
+        // --- HELPER METHOD: CREATE VISUAL TAG ---
+        /// <summary>
+        /// Creates a rounded UI element (Tag) for a skill with a remove button.
+        /// </summary>
+        private Border CreateSkillTag(string skillText, bool isTechSkill)
+        {
+            var brushConverter = new BrushConverter();
+
+            // The outer container (rounded border)
+            Border border = new Border
+            {
+                Background = (Brush)brushConverter.ConvertFromString("#E6F2FF"),
+                BorderBrush = (Brush)brushConverter.ConvertFromString("#007ACC"),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(15),
+                Padding = new Thickness(12, 6, 8, 6),
+                Margin = new Thickness(0, 0, 10, 10)
+            };
+
+            StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
+
+            // The text element
+            TextBlock text = new TextBlock
+            {
+                Text = skillText,
+                Foreground = (Brush)brushConverter.ConvertFromString("#007ACC"),
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 8, 0)
+            };
+
+            // The remove ('X') button
+            Button removeBtn = new Button
+            {
+                Content = "✕",
+                Background = Brushes.Transparent,
+                Foreground = (Brush)brushConverter.ConvertFromString("#007ACC"),
+                BorderThickness = new Thickness(0),
+                Cursor = System.Windows.Input.Cursors.Hand,
+                VerticalAlignment = VerticalAlignment.Center,
+                FontWeight = FontWeights.Bold,
+                Padding = new Thickness(0)
+            };
+
+            // Logic to remove the skill when 'X' is clicked
+            removeBtn.Click += (s, e) =>
+            {
+                if (isTechSkill)
+                {
+                    pnlTechTags.Children.Remove(border);
+                    CVDataStore.Profile.TechnicalSkills.Remove(skillText);
+                }
+                else
+                {
+                    pnlSoftTags.Children.Remove(border);
+                    CVDataStore.Profile.SoftSkills.Remove(skillText);
+                }
+                CVDataStore.Save();
+            };
+
+            // Assemble the tag
+            stack.Children.Add(text);
+            stack.Children.Add(removeBtn);
+            border.Child = stack;
+
+            return border;
         }
     }
 }
